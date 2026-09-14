@@ -29,5 +29,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: FishingGame-APK
-          path: lo
-          ve.apk
+          path: love.apk
