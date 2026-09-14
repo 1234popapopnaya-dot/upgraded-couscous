@@ -16,14 +16,21 @@ jobs:
         run: |
           curl -L -o love.apk https://github.com/love2d/love-android/releases/download/11.4a/love-11.4-android.apk
 
-      - name: Inject game.love into assets/
+      - name: Find and Inject game.love
         run: |
           mkdir -p assets
-          cp game.love assets/
+          LOVE_FILE=$(find . -maxdepth 2 -iname "*.love" | head -n 1)
+          if [ -z "$LOVE_FILE" ]; then
+            echo "ОШИБКА: Файл .love не найден!"
+            exit 1
+          fi
+          echo "Найден файл: $LOVE_FILE"
+          cp "$LOVE_FILE" assets/game.love
           zip -u love.apk assets/game.love
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: FishingGame-APK
-          path: love.apk
+          path: lov
+          e.apk
