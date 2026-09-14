@@ -1,0 +1,27 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build LOVE Android APK
+        uses: bioharz/love2d-to-android@v1.1
+        with:
+          game_name: "FishingGame"
+          developer_name: "MyCompany"
+          package_name: "com.mycompany.fishinggame"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: FishingGame-APK
+          path: "*.a
+pk"
