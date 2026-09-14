@@ -12,16 +12,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build LOVE Android APK
-        uses: bioharz/love2d-to-android@v1.1
-        with:
-          game_name: "FishingGame"
-          developer_name: "MyCompany"
-          package_name: "com.mycompany.fishinggame"
+      - name: Package game.love
+        run: zip -r game.love . -x ".git/*" ".github/*"
+
+      - name: Download LÖVE Android APK
+        run: |
+          curl -L -o love.apk https://github.com/love2d/love-android/releases/download/11.4a/love-11.4-android.apk
+
+      - name: Inject game.love into assets/
+        run: |
+          sudo apt-get update && sudo apt-get install -y zip
+          zip -u love.apk game.love
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: FishingGame-APK
-          path: "*.
-          apk"
+          path: lo
+          ve.apk
